@@ -1,0 +1,11 @@
+{
+  "id": "moviewiz",
+  "name": "MovieWiz",
+  "version": "1.0.0",
+  "author": "kuku1234us",
+  "description": "Obsidian Movie Plugin",
+  "minAppVersion": "0.12.0",
+  "js": "main.js",
+  "css": "styles.css",
+  "isDesktopOnly": false
+}

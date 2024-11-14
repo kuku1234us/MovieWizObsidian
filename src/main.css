@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.myinput {
+  width: 100% !important;
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem !important;
+  border-radius: 0.375rem !important;
+  border: 1px solid #102e3b !important;
+  outline: none !important;
+  background-color: #07141a !important;
+  transition: outline 0s !important; /* Disable outline transition */
+  color: var(--text-normal) !important;
+}
+
+.myinput:focus {
+  outline: none !important;
+  box-shadow: none !important; /* Ensure no shadow effect is applied */
+}
