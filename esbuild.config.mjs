@@ -51,5 +51,4 @@ async function build() {
     console.log("Watching for changes...");
   }
 }
-
 build();

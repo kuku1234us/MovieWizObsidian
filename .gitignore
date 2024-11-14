@@ -31,6 +31,9 @@ test-vault/
 .env.test.local
 .env.production.local
 
+# API Settings (contains sensitive keys)
+src/Settings.ts
+
 # Optional: Obsidian workspace settings
 .obsidian/
 

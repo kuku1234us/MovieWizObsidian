@@ -103,7 +103,18 @@ ep:
 
 1. Template file at: "Assets/Templates/Movie Template.md"
 2. Write permissions for creating the Movies/MovieData folder
-3. Valid TMDB API key configuration
+3. API Configuration:
+   - Create `src/Settings.ts` with your API keys:
+     ```typescript
+     export const Settings = {
+       TMDB_API_KEY: "your_tmdb_api_key_here",
+       OMDB_API_KEY: "your_omdb_api_key_here",
+     };
+     ```
+   - TMDB API key from [The Movie Database](https://www.themoviedb.org/documentation/api)
+   - Optional: OMDB API key for IMDb ratings
+
+> Note: The Settings.ts file is gitignored to prevent accidental exposure of API keys.
 
 ## Error Handling
 

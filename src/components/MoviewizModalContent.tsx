@@ -12,8 +12,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { SearchBox } from "@/components/SearchBox";
 import SuggestionPanel from "@/components/SuggestionPanel";
 import { TMDBApi } from "@/api/TMDBApi";
-import { App, Notice, TFile, TFolder } from "obsidian";
+import { Notice, TFile, TFolder } from "obsidian";
 import { useApp } from "@/contexts/GlobalContextProvider";
+import { useSettings } from "@/contexts/GlobalContextProvider";
 
 const MoviewizModalContent = ({ closeModal }: { closeModal: () => void }) => {
   const searchBoxRef = useRef<HTMLInputElement>(null);
@@ -21,6 +22,7 @@ const MoviewizModalContent = ({ closeModal }: { closeModal: () => void }) => {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [isSuggestionListFocused, setIsSuggestionListFocused] = useState(false);
   const app = useApp();
+  const settings = useSettings();
 
   useEffect(() => {
     if (searchBoxRef.current) {
@@ -69,8 +71,8 @@ const MoviewizModalContent = ({ closeModal }: { closeModal: () => void }) => {
       const mediaType = selectedItem.type;
       const details =
         mediaType === "Movie"
-          ? await TMDBApi.getMovieDetails(selectedItem.id)
-          : await TMDBApi.getTVDetails(selectedItem.id);
+          ? await TMDBApi.getMovieDetails(selectedItem.id, settings)
+          : await TMDBApi.getTVDetails(selectedItem.id, settings);
 
       // Read the template content from the vault
       const templateFile = app.vault.getAbstractFileByPath(

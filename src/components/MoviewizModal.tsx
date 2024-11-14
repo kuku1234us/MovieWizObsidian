@@ -12,12 +12,15 @@ import { Modal, App } from "obsidian";
 import { createRoot, Root } from "react-dom/client";
 import MoviewizModalContent from "@/components/MoviewizModalContent";
 import { GlobalContextProvider } from "@/contexts/GlobalContextProvider";
+import type MovieWiz from "@/main";
 
 export class MoviewizModal extends Modal {
   private root: Root | null = null;
+  private plugin: MovieWiz;
 
-  constructor(app: App) {
+  constructor(app: App, plugin: MovieWiz) {
     super(app);
+    this.plugin = plugin;
   }
 
   onOpen() {
@@ -44,7 +47,7 @@ export class MoviewizModal extends Modal {
     this.root = createRoot(contentEl);
     this.root.render(
       <React.StrictMode>
-        <GlobalContextProvider app={this.app}>
+        <GlobalContextProvider app={this.app} plugin={this.plugin}>
           <MoviewizModalContent closeModal={() => this.close()} />
         </GlobalContextProvider>
       </React.StrictMode>

@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { Search } from "lucide-react";
 import _ from "lodash";
 import { TMDBApi } from "@/api/TMDBApi";
+import { useSettings } from "@/contexts/GlobalContextProvider";
 
 export const SearchBox = ({
   inputRef,
@@ -20,6 +21,7 @@ export const SearchBox = ({
   onSearchResults?: (movies: any[]) => void;
 }) => {
   const [query, setQuery] = useState("");
+  const settings = useSettings();
 
   const handleSearchChange = _.throttle(async (query: string) => {
     if (query.trim() === "") {
@@ -28,7 +30,7 @@ export const SearchBox = ({
     }
 
     try {
-      const movies = await TMDBApi.searchMovies(query);
+      const movies = await TMDBApi.searchMovies(query, settings);
       onSearchResults?.(movies);
     } catch (error) {
       console.error("Error fetching data from TMDB", error);

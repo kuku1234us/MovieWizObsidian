@@ -16,12 +16,30 @@ MovieWiz is a powerful Obsidian plugin that lets you easily search for movies an
 ### Manual Installation
 
 1. **Download the Plugin**: [Download the latest release](https://github.com/yourusername/MovieWiz/releases).
-2. **Install in Obsidian**:
+2. **Configure API Keys**:
+   - Create a file `src/Settings.ts` using the template below:
+     ```typescript
+     export const Settings = {
+       TMDB_API_KEY: "your_tmdb_api_key_here",
+       OMDB_API_KEY: "your_omdb_api_key_here",
+     };
+     ```
+   - Replace the placeholder values with your actual API keys
+3. **Install in Obsidian**:
    - Extract the contents of the downloaded `.zip` file.
    - Place the extracted folder in your Obsidian vault under `.obsidian/plugins/`.
-3. **Enable the Plugin**:
+4. **Enable the Plugin**:
    - Open Obsidian, go to `Settings` > `Community Plugins`.
    - Locate `MovieWiz` in the list and enable it.
+
+### For Developers
+
+1. Clone the repository
+2. Create `src/Settings.ts` with your API keys (see template above)
+3. Run `npm install`
+4. Run `npm run build`
+
+> **Important**: Never commit your `Settings.ts` file to version control as it contains sensitive API keys.
 
 ### Install via BRAT (Beta Reviewer's Auto-update Tool)
 

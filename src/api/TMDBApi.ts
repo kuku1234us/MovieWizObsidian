@@ -15,17 +15,20 @@
  * @module TMDBApi
  */
 import axios from "axios";
+import { MovieWizSettings } from "../types/MovieWizSettings";
 
-const TMDB_API_KEY = "replace_with_your_key";
-const OMDB_API_KEY = "replace_with_your_key";
+type TMDBSettings = Pick<MovieWizSettings, "tmdbApiKey" | "omdbApiKey">;
 
 export class TMDBApi {
-  static async searchMovies(query: string) {
+  static async searchMovies(
+    query: string,
+    settings: Pick<MovieWizSettings, "tmdbApiKey">
+  ) {
     const response = await axios.get(
       `https://api.themoviedb.org/3/search/multi`,
       {
         params: {
-          api_key: TMDB_API_KEY,
+          api_key: settings.tmdbApiKey,
           query,
         },
       }
@@ -50,22 +53,22 @@ export class TMDBApi {
       }));
   }
 
-  static async getMovieDetails(movieId: string) {
+  static async getMovieDetails(movieId: string, settings: TMDBSettings) {
     const response = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}`,
       {
         params: {
-          api_key: TMDB_API_KEY,
+          api_key: settings.tmdbApiKey,
           append_to_response: "external_ids,credits",
         },
       }
     );
     const movieDetails = response.data;
 
-    // Get IMDb rating from OMDb API if imdb_id is available
-    if (movieDetails.external_ids?.imdb_id) {
+    if (movieDetails.external_ids?.imdb_id && settings.omdbApiKey) {
       const omdbRating = await TMDBApi.getOMDbRating(
-        movieDetails.external_ids.imdb_id
+        movieDetails.external_ids.imdb_id,
+        settings
       );
       return { ...movieDetails, imdbRating: omdbRating };
     }
@@ -73,22 +76,22 @@ export class TMDBApi {
     return movieDetails;
   }
 
-  static async getTVDetails(tvId: string) {
+  static async getTVDetails(tvId: string, settings: TMDBSettings) {
     const response = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}`,
       {
         params: {
-          api_key: TMDB_API_KEY,
+          api_key: settings.tmdbApiKey,
           append_to_response: "external_ids,credits",
         },
       }
     );
     const tvDetails = response.data;
 
-    // Get IMDb rating from OMDb API if imdb_id is available
-    if (tvDetails.external_ids?.imdb_id) {
+    if (tvDetails.external_ids?.imdb_id && settings.omdbApiKey) {
       const omdbRating = await TMDBApi.getOMDbRating(
-        tvDetails.external_ids.imdb_id
+        tvDetails.external_ids.imdb_id,
+        settings
       );
       return { ...tvDetails, imdbRating: omdbRating };
     }
@@ -96,10 +99,15 @@ export class TMDBApi {
     return tvDetails;
   }
 
-  static async getOMDbRating(imdbId: string) {
+  static async getOMDbRating(
+    imdbId: string,
+    settings: Pick<MovieWizSettings, "omdbApiKey">
+  ) {
+    if (!settings.omdbApiKey) return "N/A";
+
     try {
       const response = await axios.get(
-        `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`
+        `https://www.omdbapi.com/?i=${imdbId}&apikey=${settings.omdbApiKey}`
       );
       return response.data.imdbRating || "N/A";
     } catch (error) {
