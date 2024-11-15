@@ -101,20 +101,36 @@ ep:
 
 ## Required Setup
 
-1. Template file at: "Assets/Templates/Movie Template.md"
-2. Write permissions for creating the Movies/MovieData folder
-3. API Configuration:
-   - Create `src/Settings.ts` with your API keys:
-     ```typescript
-     export const Settings = {
-       TMDB_API_KEY: "your_tmdb_api_key_here",
-       OMDB_API_KEY: "your_omdb_api_key_here",
-     };
-     ```
-   - TMDB API key from [The Movie Database](https://www.themoviedb.org/documentation/api)
-   - Optional: OMDB API key for IMDb ratings
+### Initial Configuration
 
-> Note: The Settings.ts file is gitignored to prevent accidental exposure of API keys.
+1. **API Keys**: Configure through the plugin settings:
+   - TMDB API key (required) - Get from [The Movie Database](https://www.themoviedb.org/documentation/api)
+   - OMDB API key (optional) - For IMDb ratings integration
+
+### Template Setup
+
+1. **Template File**:
+   - Default location: "Assets/Templates/Movie Template.md"
+   - Can be customized through settings
+   - Used for creating new movie/TV show notes
+
+### Output Location
+
+1. **Movie Notes Folder**:
+   - Default location: "Movies/MovieData"
+   - Can be customized through settings
+   - Created automatically if it doesn't exist
+
+### Settings Configuration
+
+Access plugin settings through Obsidian's settings panel:
+
+1. **TMDB API Key**: Required for searching and fetching movie data
+2. **OMDB API Key**: Optional, used for IMDb ratings
+3. **Template File Location**: Customizable path to your template file
+4. **Movie Notes Location**: Customizable path for storing movie notes
+
+> Note: The plugin will show a warning and prevent usage if the TMDB API key is not configured.
 
 ## Error Handling
 
